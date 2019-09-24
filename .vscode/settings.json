@@ -1,0 +1,6 @@
+{
+    "python.venvPath": ".venv",
+    "files.watcherExclude": {
+        "**/.venv/**": true
+    }, // Path
+}
