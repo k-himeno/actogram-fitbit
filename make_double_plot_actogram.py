@@ -75,15 +75,22 @@ def double_plot(file_path_list, start="all", end="all"):
     ax.set_xticks(np.arange(5) * 720)
     ax.set_xticklabels(np.arange(5) * 12)
 
-    y_index = pd.date_range(start=start, end=end, freq="D").strftime("%y/%m/%d").values
+    y_index = pd.date_range(start=start, end=end, freq="D").strftime("%y-%m-%d").values
     y_ticks = np.linspace(0, plot01.shape[0], 6).astype(np.uint64)
     ax.set_yticks(y_ticks)
     ax.set_yticklabels(y_index[y_ticks])
     plt.tight_layout()
-    plt.savefig("/home/kenya/tmp.pdf")
-    plt.savefig("/home/kenya/tmp.png", format="png", dpi=1000)
+    if not os.path.exists("result"):
+        os.makedirs("result")
+    plt.savefig(os.path.join("result", y_index[0] + "_" + y_index[-1] + ".pdf"))
+
+    plt.savefig(
+        os.path.join("result", y_index[0] + "_" + y_index[-1] + ".png"),
+        format="png",
+        dpi=1000,
+    )
     # plt.yticks()
 
 
 file_path_list = glob.glob("test_data/sleep-*.json")
-double_plot(file_path_list)  # , start=datetime.datetime(2019, 1, 1), end="all")
+double_plot(file_path_list, start=datetime.datetime(2019, 1, 1), end="all")
